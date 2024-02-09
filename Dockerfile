@@ -13,7 +13,7 @@ RUN ln -snf /usr/share/zoneinfo/$CONTAINER_TIMEZONE /etc/localtime && echo $CONT
 # Install build tools
 RUN apt-get update && \
     apt-get upgrade -y && \
-    apt-get install -y build-essential git bzip2 cmake zip curl wget doxygen python3 python3-pip && \
+    apt-get install -y build-essential git bzip2 cmake zip curl wget doxygen python3 python3-pip python-is-python3 && \
     apt-get autoclean -y && \
     apt-get autoremove -y && \
     apt-get clean
