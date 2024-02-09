@@ -1,5 +1,9 @@
 FROM ubuntu:20.04
 
+ARG ARM_TOOLCHAIN_PATH=gcc-arm-none-eabi
+ARG ARM_VERSION=13.2.rel1
+ARG ARM_ARCH=x86_64
+
 # Use home directory for builds, be sure to have the application folder loaded here too (ie /home/app)
 WORKDIR /home
 
@@ -15,7 +19,8 @@ RUN apt-get update && \
     apt-get clean
 
 # Setup ARM GNU toolchain, rename the toolchain dir to leave out the version info in the cmake files (optional)
-ARG ARM_DL_DIR_PATH=9-2020q2
-ARG ARM_GNU_VER_ID=gcc-arm-none-eabi-9-2020-q2-update
-RUN wget -qO- https://developer.arm.com/-/media/Files/downloads/gnu-rm/$ARM_DL_DIR_PATH/$ARM_GNU_VER_ID-x86_64-linux.tar.bz2| tar -xj
-RUN mv gcc-arm-none-eabi-9-2020-q2-update gcc-arm-none-eabi
+# Setup steps are referenced from https://github.com/jasonyang-ee/STM32-Dockerfile
+RUN mkdir ${ARM_TOOLCHAIN_PATH}
+RUN curl -L -o gcc-arm.tar.xz "https://developer.arm.com/-/media/Files/downloads/gnu/${ARM_VERSION}/binrel/arm-gnu-toolchain-${ARM_VERSION}-${ARM_ARCH}-arm-none-eabi.tar.xz"
+RUN tar xf gcc-arm.tar.xz --strip-components=1 -C ${ARM_TOOLCHAIN_PATH}
+RUN rm gcc-arm.tar.xz
