@@ -6,6 +6,7 @@ name: Docker
 # documentation.
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
@@ -16,14 +17,6 @@ on:
     branches:
       - main
       - 'develop'
-  workflow_dispatch:
-    inputs:
-      logLevel:
-        description: 'Log level'     
-        required: true
-        default: 'warning'
-      tags:
-        description: 'Manual run'
 
 
 env:
